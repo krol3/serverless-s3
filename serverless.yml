@@ -1,0 +1,24 @@
+service: fetch-file-store-s3
+
+frameworkVersion: ">=1.1.0"
+
+custom:
+  bucket: krol01
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  stage: dev
+  region: us-east-1
+  profile: gpalab
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "*"
+
+functions:
+  save:
+    handler: handler.save
+    environment:
+      BUCKET: ${self:custom.bucket}
